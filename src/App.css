@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  font-family: sans-serif;
+  color: #2f3b40;
 }
 
 .App-logo {
@@ -39,6 +41,7 @@
 
 .Page {
   padding-bottom: 5%;
+  background-color: rgba(236, 236, 236, 1);
 }
 
 .TopBar {
@@ -116,17 +119,19 @@
 .CoverPage {
   height: auto;
   width: 80%;
-  background-color: rgba(236, 236, 236, 1);
+  background-color: white;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   
   font-size: 1.5rem;
   padding: 3em;
+  border-radius: 5px;
 }
 
 .DescriptionHeader {
   font-size: 2rem;
+  font-weight: bold;
 }
 
 .SkillBoxes {
@@ -149,6 +154,7 @@
   padding: 1em;
   font-size: 1.5rem;
   font-weight: 700;
+  border-radius: 8px;
 }
 
 .BoxList {
@@ -172,4 +178,28 @@
 
 .Linkedin {
   color: inherit;
+}
+
+.BacktestBox {
+  background-color: #68cde4;
+  border-radius: 5px;
+  padding: 1.5rem;
+  display: flex;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.BacktestConfirm {
+  height: 6em;
+  width: 6em;
+  background-color: #ffffff;
+  margin-left: auto;
+  margin-right: auto;
+  color: #7d7d7d;
+  text-align: center;
+  padding: 0.8em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 8px;
 }

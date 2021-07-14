@@ -13,7 +13,7 @@ function Title() {
 
   return (
     <div className="Title">
-      <div className="InitialTitle">DEAR</div> 
+      <div className="InitialTitle">POWERED BY</div> 
       <Logo/>
     </div>
   )
