@@ -192,20 +192,30 @@
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  background-image:url('./shecodes.jpg');
+  background-attachment:fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.BacktestConfirm {
+.BotConfirm {
   height: 6em;
   width: 6em;
   background-color: #ffffff;
-  margin-left: auto;
-  color: #7d7d7d;
+  margin: 0.4em;
+  color: #2e3c3f;
   text-align: center;
   padding: 0.8em;
   font-size: 1.5rem;
   font-weight: 700;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: pointer;;
+  border-width: 1em;
+}
+
+.BotConfirm:hover {
+  color: white;
+  background-color:#e6588e;
 }
 
 .react-date-picker, .react-date-picker *, .react-date-picker *:before, .react-date-picker *:after {
@@ -271,4 +281,8 @@
 .Dropdown-root {
   margin-top: 0.4em;
   margin-bottom: 0.4em;
+}
+
+.ConfirmBox {
+  display: flex;
 }

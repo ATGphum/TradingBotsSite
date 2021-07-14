@@ -17,7 +17,7 @@ export default function CoverPage(props) {
 
       fiatWorthChange(total)
       winRateChange(winningRate)
-      messageChange("Your initial investment would now be worth $" + total + ", with a win rate of " + winningRate + "%")
+      messageChange("Your initial investment would now be worth $" + total.toFixed(2) + ", with a win rate of " + winningRate + "%")
     }
 
     return (
@@ -161,7 +161,10 @@ export default function CoverPage(props) {
         <Dropdown options={algo_options} onChange={handleAlgoChange} value={algoOption} placeholder="Select an option"/>
         <div>Timeframe</div>
         <Dropdown options={candle_options} onChange={handleCandleChange} value={candleOption} placeholder="Select an option"/>
-        <div className="BacktestConfirm" onClick={fetchBacktest}>run backtest</div>
+        <div className="ConfirmBox">
+          <div className="BotConfirm" onClick={fetchBacktest}>run backtest</div>
+          <div className="BotConfirm">run live bot</div>
+        </div>
       </div>
     )
   }
