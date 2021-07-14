@@ -6,11 +6,26 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 export default function CoverPage(props) {
+
+    const [fiatWorth, fiatWorthChange] = useState(0)
+    //const [cryptoBalanceWorth, cryptoBalanceWorthChange] = useState(0)
+    const [winRate, winRateChange] = useState(0)
+    const [message, messageChange] = useState("")
+
+    function loadResults(newFiat, newCrypto, winningRate){
+      let total = newFiat + newCrypto
+
+      fiatWorthChange(total)
+      winRateChange(winningRate)
+      messageChange("Your initial investment would now be worth $" + total + ", with a win rate of " + winningRate + "%")
+    }
+
     return (
       <div className="CoverPage">
         <DescriptionHeader/>
         <Description/>
-        <TradingBox currentPair={props.currentPair}/>
+        <TradingBox currentPair={props.currentPair} loadResults={loadResults}/>
+        {message}
       </div>
     )
   }
@@ -34,10 +49,10 @@ export default function CoverPage(props) {
   }
 
   function TradingBox(props) {
+  
     return (
       <div className="TradingBox">
-        <TradingForm currentPair={props.currentPair}/>
-        <BacktestConfirm/>
+        <TradingForm currentPair={props.currentPair} resultLoader={props.loadResults}/>
       </div>
     )
   }
@@ -46,7 +61,7 @@ export default function CoverPage(props) {
 
     const [fromDate, fromDateChange] = useState(new Date())
     const [toDate, toDateChange] = useState(new Date())
-    const [startingFiat, startingFiatChange] = useState(0)
+    const [startingFiat, startingFiatChange] = useState(1000)
     const [startingCrypto, startingCryptoChange] = useState(0)
     const [tradingFee, tradingFeeChange] = React.useState(1);
     const [algoOption, algoOptionChange] = React.useState("rsi_algo");
@@ -99,7 +114,8 @@ export default function CoverPage(props) {
         ending_date: toDateUnix,
         df_search_size: 30
       }
-      await getResponse(json)
+      let resp = await getResponse(json)
+      props.resultLoader(resp["fiat_balance"], resp["coin_worth"], resp["win_rate"])
     }
 
     return (
@@ -124,13 +140,11 @@ export default function CoverPage(props) {
         </div>
         <div>Starting fiat balance</div>
         <label>$<input type="text" value={startingFiat} onChange={handleFiatChange} /></label>
-        <div>Starting crypto balance</div>
-        <label>$<input type="text" value={startingCrypto} onChange={handleCryptoChange} /></label>
         <div>Trading fee %</div>
-        <Slider value={tradingFee} onChange={handleFeeChange} valueLabelDisplay="on" min={0} max={0.2} step={0.01}/>
+        <Slider value={tradingFee} defaultValue={0.1} onChange={handleFeeChange} valueLabelDisplay="on" min={0} max={0.2} step={0.01}/>
         <Dropdown options={algo_options} onChange={handleAlgoChange} value={algoOption} placeholder="Select an option"/>
         <Dropdown options={candle_options} onChange={handleCandleChange} value={candleOption} placeholder="Select an option"/>
-        <div onClick={fetchBacktest}>run backtest</div>
+        <div className="BacktestConfirm" onClick={fetchBacktest}>run backtest</div>
       </div>
     )
   }
@@ -180,7 +194,7 @@ export default function CoverPage(props) {
     '1m'
   ]
 
-  async function getResponse(json) {
+async function getResponse(json) {
   // request options
   const options = {
     method: 'POST',
@@ -194,5 +208,5 @@ export default function CoverPage(props) {
   // send post request
   let res = await fetch('http://127.0.0.1:8000/BacktestResults/', options)
   res = await res.json()
-  console.log(res)
-  }
+  return res 
+}
