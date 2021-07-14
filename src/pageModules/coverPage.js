@@ -2,7 +2,8 @@ import React, { Component, useEffect, useRef, useState } from 'react'
 import '../App.css'
 import DatePicker from 'react-date-picker'
 import { Slider } from '@material-ui/core';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 export default function CoverPage(props) {
     return (
@@ -48,13 +49,13 @@ export default function CoverPage(props) {
     const [startingFiat, startingFiatChange] = useState(0)
     const [startingCrypto, startingCryptoChange] = useState(0)
     const [tradingFee, tradingFeeChange] = React.useState(1);
-    const [coinPercent, coinPercentChange] = React.useState(1);
-    const [cryptoPercent, cryptoPercentChange] = React.useState(1);
+    const [algoOption, algoOptionChange] = React.useState("rsi_algo");
+    const [candleOption, candleOptionChange] = React.useState("1h");
 
     let fromDateUnix;
     let toDateUnix;
-    (fromDate != null) ? fromDateUnix = fromDate.getTime() : fromDateUnix = "";
-    (toDate != null) ? toDateUnix = toDate.getTime() : toDateUnix = "";
+    (fromDate != null) ? fromDateUnix = fromDate.getTime() : fromDateUnix = null;
+    (toDate != null) ? toDateUnix = toDate.getTime() : toDateUnix = null;
 
     function handleFiatChange(e){
       const re = /^[0-9\b]+$/;
@@ -77,11 +78,28 @@ export default function CoverPage(props) {
     function handleFeeChange(e, newValue){
       tradingFeeChange(newValue)
     }
-    function handleCoinPercChange(e, newValue){
-      coinPercentChange(newValue)
+    function handleAlgoChange(e){
+      algoOptionChange(e.value)
     }
-    function handleCryptoPercChange(e, newValue){
-      cryptoPercentChange(newValue)
+    function handleCandleChange(e){
+      candleOptionChange(e.value)
+    }
+    async function fetchBacktest(){
+      const json = {
+        ticker: props.currentPair,
+        starting_fiat_balance: parseInt(startingFiat),
+        starting_coin_balance: parseInt(startingCrypto),
+        trading_fee: tradingFee/100,
+        algolist: [algoOption],
+        algoargs: [algo_dict[algoOption]],
+        klineinterval: candleOption,
+        fiat_percent: 1,
+        coin_percent: 1,
+        starting_date: fromDateUnix,
+        ending_date: toDateUnix,
+        df_search_size: 30
+      }
+      await getResponse(json)
     }
 
     return (
@@ -109,11 +127,10 @@ export default function CoverPage(props) {
         <div>Starting crypto balance</div>
         <label>$<input type="text" value={startingCrypto} onChange={handleCryptoChange} /></label>
         <div>Trading fee %</div>
-        <Slider value={tradingFee} onChange={handleFeeChange} valueLabelDisplay="on" min={0} max={2} step={0.01}/>
-        <div>Coin %</div>
-        <Slider value={coinPercent} onChange={handleCoinPercChange} valueLabelDisplay="on" min={0} max={1} step={0.01}/>
-        <div>Crypto %</div>
-        <Slider value={cryptoPercent} onChange={handleCryptoPercChange} valueLabelDisplay="on" min={0} max={1} step={0.01}/>
+        <Slider value={tradingFee} onChange={handleFeeChange} valueLabelDisplay="on" min={0} max={0.2} step={0.01}/>
+        <Dropdown options={algo_options} onChange={handleAlgoChange} value={algoOption} placeholder="Select an option"/>
+        <Dropdown options={candle_options} onChange={handleCandleChange} value={candleOption} placeholder="Select an option"/>
+        <div onClick={fetchBacktest}>run backtest</div>
       </div>
     )
   }
@@ -133,3 +150,49 @@ export default function CoverPage(props) {
     )
   }
 
+  const algo_options = [
+    "rsi_algo",
+    "sma_algo",
+    "ema_algo", 
+  ]
+
+  const algo_dict = {
+    "sma_algo": [14, 30],
+    "ema_algo": [14, 30],
+    "rsi_algo": [14, 30],
+  }
+
+  const candle_options = [
+    '1m',
+    '3m',
+    '5m',
+    '15m',
+    '30m',
+    '1h',
+    '2h',
+    '4h',
+    '6h',
+    '8h',
+    '12h',
+    '1d',
+    '3d',
+    '1w',
+    '1m'
+  ]
+
+  async function getResponse(json) {
+  // request options
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(json),
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  // send post request
+  let res = await fetch('http://127.0.0.1:8000/BacktestResults/', options)
+  res = await res.json()
+  console.log(res)
+  }
