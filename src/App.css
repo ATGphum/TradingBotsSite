@@ -205,21 +205,70 @@
   font-size: 1.5rem;
   font-weight: 700;
   border-radius: 8px;
+  cursor: pointer;
 }
 
-.react-date-picker__wrapper {
+.react-date-picker, .react-date-picker *, .react-date-picker *:before, .react-date-picker *:after {
   font-family: Arial, Helvetica, sans-serif;
   color:#2f3b40;
+  stroke:#2f3b40;
+  border-color:#2f3b40;
+  padding: 0.1em;
 }
 
 .MuiSlider-track {
-  color: #ee9e44
+  color: #acacac
 }
 
 .MuiSlider-rail {
-  color: #ee9e44
+  color: #818181
 }
 
 .MuiSlider-thumb {
-  color: #ee9e44
+  color: #818181
+}
+
+.BacktestMessage {
+  margin: 1.5rem
+}
+
+.BacktestForm {
+  background-color: #e5598e;
+  padding: 2em;
+  color: white;
+  font-weight: 600;
+  border-radius: 7px;
+}
+
+.TradingPair {
+  font-size: 4rem;
+  margin: .15em; 
+}
+
+.DateBox {
+  display: flex;
+  margin-bottom: 0.4em;
+  margin-top: 0.4em;
+}
+
+.FiatInput {
+  font-size: 1.5rem;
+  font-family: arial, sans-serif;
+  padding: 0.3em;
+  margin: 0.3em;
+  text-align: center;
+}
+
+.FeeBox {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.FeeSlider {
+  margin-top: 1.6em;
+}
+
+.Dropdown-root {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
 }

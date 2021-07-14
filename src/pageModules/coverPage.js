@@ -25,7 +25,7 @@ export default function CoverPage(props) {
         <DescriptionHeader/>
         <Description/>
         <TradingBox currentPair={props.currentPair} loadResults={loadResults}/>
-        {message}
+        <BacktestMessage message={message}/>
       </div>
     )
   }
@@ -44,6 +44,14 @@ export default function CoverPage(props) {
         <p>
           A trading bot that allows you to use multiple indicators to backtest your strategy to check for effectiveness and also allows for real time trading via a simple UI
         </p>
+      </div>
+    )
+  }
+
+  function BacktestMessage(props) {
+    return (
+      <div className="BacktestMessage">
+        {props.message}
       </div>
     )
   }
@@ -120,29 +128,38 @@ export default function CoverPage(props) {
 
     return (
       <div className="BacktestForm">
-        <div>Current trading pair: {props.currentPair}</div>
-        <div>Date to simulate from:&nbsp;
-          <DatePicker
+        <div>Current trading pair:</div>
+        <div className="TradingPair">{props.currentPair}</div>
+        <div className="DateBox">
+          <div>
+            <div>simulate from:&nbsp;</div>
+            <DatePicker
             onChange={fromDateChange}
             value={fromDate}
             required={true}
             maxDate={toDate}
           />
         </div>
-        <div>Date to simulate to:&nbsp; 
-          <DatePicker
-            onChange={toDateChange}
-            value={toDate}
-            required={true}
-            maxDate={new Date()}
-            minDate={fromDate}
-          />
+        <div>
+            <div>simulate to:&nbsp;</div>
+            <DatePicker
+              onChange={toDateChange}
+              value={toDate}
+              required={true}
+              maxDate={new Date()}
+              minDate={fromDate}
+            />
+          </div>
         </div>
         <div>Starting fiat balance</div>
-        <label>$<input type="text" value={startingFiat} onChange={handleFiatChange} /></label>
+        <label><input className="FiatInput" type="text" value={startingFiat} onChange={handleFiatChange} /></label>
+        <div className="FeeBox">
         <div>Trading fee %</div>
-        <Slider value={tradingFee} defaultValue={0.1} onChange={handleFeeChange} valueLabelDisplay="on" min={0} max={0.2} step={0.01}/>
+        <Slider className="FeeSlider" value={tradingFee} defaultValue={0.1} onChange={handleFeeChange} valueLabelDisplay="on" min={0} max={0.2} step={0.01}/>
+        </div>
+        <div>Technical Indicator</div>
         <Dropdown options={algo_options} onChange={handleAlgoChange} value={algoOption} placeholder="Select an option"/>
+        <div>Timeframe</div>
         <Dropdown options={candle_options} onChange={handleCandleChange} value={candleOption} placeholder="Select an option"/>
         <div className="BacktestConfirm" onClick={fetchBacktest}>run backtest</div>
       </div>
