@@ -1,11 +1,12 @@
 import React, { Component, useEffect, useRef, useState } from 'react'
 import '../App.css'
 
-export default function CoverPage() {
+export default function CoverPage(props) {
     return (
       <div className="CoverPage">
         <DescriptionHeader/>
         <Description/>
+        <TradingBox currentPair={props.currentPair}/>
       </div>
     )
   }
@@ -24,24 +25,23 @@ export default function CoverPage() {
         <p>
           A trading bot that allows you to use multiple indicators to backtest your strategy to check for effectiveness and also allows for real time trading via a simple UI
         </p>
-        <BacktestBox/>
       </div>
     )
   }
 
-  function BacktestBox() {
+  function TradingBox(props) {
     return (
-      <div className="BacktestBox">
-        <BacktestForm/>
+      <div className="TradingBox">
+        <TradingForm currentPair={props.currentPair}/>
         <BacktestConfirm/>
       </div>
     )
   }
 
-  function BacktestForm() {
+  function TradingForm(props) {
     return (
       <div className="BacktestForm">
-        
+        <div>Current trading pair: {props.currentPair}</div>
       </div>
     )
   }
@@ -56,8 +56,7 @@ export default function CoverPage() {
 
   function TradingBotBox() {
     return (
-      <div className="TradingBoxBox">
-
+      <div className="TradingBotBox">
       </div>
     )
   }

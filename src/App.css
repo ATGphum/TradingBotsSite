@@ -180,7 +180,7 @@
   color: inherit;
 }
 
-.BacktestBox {
+.TradingBox {
   background-color: #68cde4;
   border-radius: 5px;
   padding: 1.5rem;
@@ -195,7 +195,6 @@
   width: 6em;
   background-color: #ffffff;
   margin-left: auto;
-  margin-right: auto;
   color: #7d7d7d;
   text-align: center;
   padding: 0.8em;

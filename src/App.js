@@ -15,12 +15,15 @@ function App() {
 }
 
 function Page() {
+
+  const [pair, setPair] = useState("BTCUSDT")
+
   return (
     <div className="Page">
       <Background/>
       <Title/>
-      <CoverPage/>
-      <SkillBoxes/>
+      <CoverPage currentPair={pair}/>
+      <SkillBoxes setPair={setPair}/>
     </div>
   )
 }
