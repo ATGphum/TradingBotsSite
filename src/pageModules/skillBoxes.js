@@ -19,6 +19,9 @@ export default function SkillBoxes(props) {
         <SkillBox backgroundColor="#ef9e44" name="Ethereum" tradingPair="ETHUSDT" updatePair={setPair}/>
         <SkillBox backgroundColor="#b4cc32" name="Nano" tradingPair="NANOUSDT" updatePair={setPair}/>
         <SkillBox backgroundColor="#67cce4" name="Polkadot" tradingPair="DOTUSDT" updatePair={setPair}/>
+        <SkillBox backgroundColor="#b4cc32" name="Dogecoin" tradingPair="DOGEUSDT" updatePair={setPair}/>
+        <SkillBox backgroundColor="#67cce4" name="Cardano" tradingPair="ADAUSDT" updatePair={setPair}/>
+        <SkillBox backgroundColor="#ef9e44" name="Solana" tradingPair="SOLUSDT" updatePair={setPair}/>
       </div>
     )
   }
